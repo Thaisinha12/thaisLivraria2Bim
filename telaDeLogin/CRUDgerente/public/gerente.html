@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Painel do Gerente</title>
+  <link rel="stylesheet" href="gerente.css" />
+</head>
+<body>
+  <h1>Painel do Gerente</h1>
+
+  <section>
+    <h2>Adicionar Livro</h2>
+    <form id="form-livro">
+      <input type="text" id="titulo" placeholder="Título" required />
+      <input type="text" id="autor" placeholder="Autor" required />
+      <input type="number" id="preco" placeholder="Preço (R$)" required />
+      <input type="text" id="imagem" placeholder="Caminho da imagem" required />
+      <button type="submit">Adicionar</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Livros Cadastrados</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Autor</th>
+          <th>Preço</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="lista-livros"></tbody>
+    </table>
+  </section>
+
+  <script>
+    const form = document.getElementById('form-livro');
+    const lista = document.getElementById('lista-livros');
+
+    function carregarLivros() {
+      fetch('/gerente/livros')
+        .then(res => res.json())
+        .then(livros => {
+          lista.innerHTML = '';
+          livros.forEach(livro => {
+            lista.innerHTML += `
+              <tr>
+                <td>${livro.id}</td>
+                <td>${livro.titulo}</td>
+                <td>${livro.autor}</td>
+                <td>R$ ${livro.preco.toFixed(2)}</td>
+                <td>
+                  <button onclick="removerLivro(${livro.id})">🗑️</button>
+                </td>
+              </tr>
+            `;
+          });
+        });
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const novoLivro = {
+        titulo: form.titulo.value,
+        autor: form.autor.value,
+        preco: parseFloat(form.preco.value),
+        imagem: form.imagem.value
+      };
+      fetch('/gerente/livros', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(novoLivro)
+      }).then(() => {
+        form.reset();
+        carregarLivros();
+      });
+    });
+
+    function removerLivro(id) {
+      if (confirm('Deseja remover este livro?')) {
+        fetch(`/gerente/livros/${id}`, { method: 'DELETE' })
+          .then(() => carregarLivros());
+      }
+    }
+
+    carregarLivros();
+  </script>
+</body>
+</html>

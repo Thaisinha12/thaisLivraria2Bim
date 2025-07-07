@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <!-- Acho que essa parte aqui vai na tela de login -->
+    <h1>Cliente</h1>
+    <input type="text" id="email" placeholder="Digite o email">
+    <input type="text" id="senha" placeholder="Digite a senha">
+    <button onclick="enviarValores()">Enviar</button>
+    <br><br>
+    <span id="respostaDoServidor">.....</span>
+    <!-- Acho que essa parte aqui vai na tela de login -->
+    
+    <script>
+        async function enviarValoresAoServidor() {
+            debugger;
+            const email = parseFloat(document.getElementById('email').value);
+            const senha = parseFloat(document.getElementById('senha').value);
+
+            try {
+                                                                           
+                const response = await fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, senha })
+                });
+                
+                const resultado = await response.text();
+                debugger;
+                document.getElementById("respostaDoServidor").innerHTML = resultado;
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro na comunicação com o servidor');
+            }
+        }
+    </script>
+</body>
+
+</html>

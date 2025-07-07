@@ -1,0 +1,87 @@
+[
+    {
+      "id": 1,
+      "titulo": "A Hipótese do Amor",
+      "autor": "Desconhecido",
+      "preco": 35.00,
+      "imagem": "img/hipotese.jpeg"
+    },
+    {
+      "id": 2,
+      "titulo": "Diário de uma Paixão",
+      "autor": "Desconhecido",
+      "preco": 30.00,
+      "imagem": "img/diarioDeUmaPaixao.jpeg"
+    },
+    {
+      "id": 3,
+      "titulo": "O Capital",
+      "autor": "Karl Marx",
+      "preco": 40.00,
+      "imagem": "img/oCapital.png"
+    },
+    {
+      "id": 4,
+      "titulo": "Noites Brancas",
+      "autor": "Fiódor Dostoiévski",
+      "preco": 30.00,
+      "imagem": "img/noitesBrancas.jpeg"
+    },
+    {
+      "id": 5,
+      "titulo": "Verity",
+      "autor": "Colleen Hoover",
+      "preco": 40.00,
+      "imagem": "img/verity.jpeg"
+    },
+    {
+      "id": 6,
+      "titulo": "Memórias do Subsolo",
+      "autor": "Fiódor Dostoiévski",
+      "preco": 45.00,
+      "imagem": "img/memoriasDoSubsolo.jpeg"
+    },
+    {
+      "id": 7,
+      "titulo": "O Amor Não é Óbvio",
+      "autor": "Desconhecido",
+      "preco": 45.00,
+      "imagem": "img/oAmorNaoeObvio.jpeg"
+    },
+    {
+      "id": 8,
+      "titulo": "O Príncipe Cruel",
+      "autor": "Holly Black",
+      "preco": 60.00,
+      "imagem": "img/oPrincipeCruel.jpeg"
+    },
+    {
+      "id": 9,
+      "titulo": "Estilhaça-me",
+      "autor": "Tahereh Mafi",
+      "preco": 25.00,
+      "imagem": "img/estilhacame.jpeg"
+    },
+    {
+      "id": 10,
+      "titulo": "Amor, Teoricamente",
+      "autor": "Ali Hazelwood",
+      "preco": 20.00,
+      "imagem": "img/amorTeoricamente.jpeg"
+    },
+    {
+      "id": 11,
+      "titulo": "A Rainha Vermelha",
+      "autor": "Victoria Aveyard",
+      "preco": 30.00,
+      "imagem": "img/rainhaVermelha.jpeg"
+    },
+    {
+      "id": 12,
+      "titulo": "1984",
+      "autor": "George Orwell",
+      "preco": 35.00,
+      "imagem": "img/1984.jpeg"
+    }
+  ]
+  

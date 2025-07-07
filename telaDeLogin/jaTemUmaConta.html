@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="login.css" />
+  <script src="login.js" defer></script>
+</head>
+<body>
+  <h1>Já tem uma conta? Faça login!</h1>
+
+  <div class="form-row">
+    <label for="email">Email:</label>
+    <input type="text" id="email" />
+  </div>
+
+  <div class="form-row">
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" />
+  </div>
+
+  <button onclick="fazerLogin()">Entrar</button>
+  <span id="respostaDoServidor">.....</span>
+</body>
+</html>
