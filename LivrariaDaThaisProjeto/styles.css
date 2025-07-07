@@ -1,0 +1,250 @@
+body {
+    font-family: 'Lora', serif;
+    background-color: #ffe6f0; /* rosa bebê */
+    margin: 0;
+    padding: 0;
+    color: #000; /* texto preto */
+}
+
+header {
+    background-color: #ffcce0; /* rosa claro */
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.search-bar input, .search-bar button {
+    font-family: 'Poppins', sans-serif;
+}
+
+main {
+    background-color: #ffe6f0;
+    padding: 40px 20px;
+}
+
+h2 {
+    background-color: transparent;
+    font-family: 'Roboto', sans-serif;
+    color: #000; /* preto */
+}
+
+.book {
+    background-color: #cce7ff; /* azul bebê */
+    padding: 15px;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+    margin: 15px;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.book h3 {
+    font-size: 18px;
+    color: #000; /* preto */
+    font-family: 'Lora', serif;
+}
+
+.book p {
+    background-color: #e0f2ff; /* azul bebê mais claro */
+    font-size: 16px;
+    color: #000; /* preto */
+    font-family: 'Poppins', sans-serif;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.cart-button-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.cart-icon-btn {
+    background-color: #ff0066;
+    border: none;
+    color: white;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cart {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #cce7ff;
+    padding: 20px;
+    display: none;
+    overflow-y: auto;
+    z-index: 9999;
+    color: #000;
+}
+
+.cart h2 {
+    font-size: 24px;
+    color: #000; /* preto */
+    font-family: 'Roboto', sans-serif;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.cart-item img {
+    width: 50px;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+#cart-items {
+    max-height: 300px; /* Define uma altura máxima para o carrinho */
+    overflow-y: auto;  /* Permite a rolagem vertical quando o conteúdo ultrapassar a altura */
+}
+
+.remove-btn {
+    background-color: #ff4d4d;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.checkout-btn {
+    margin-top: 15px;
+    background-color: #ff0066;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.checkout-form {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    z-index: 10000;
+}
+
+.checkout-form form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    margin: 0 auto;
+    color: #000; /* texto preto */
+}
+
+.checkout-form label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #000; /* preto */
+}
+
+.checkout-form input, .checkout-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.checkout-form button {
+    background-color: #ff66b2;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.back-btn {
+    background-color: #999;
+    color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px; /* Adicionando margem superior */
+}
+
+/* === ALTERADO AQUI PARA FICAR NO CANTO SUPERIOR DIREITO === */
+#pix-qrcode {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;       /* mesma largura do carrinho */
+    height: 100vh;      /* altura total da tela */
+    background-color: #fff0f5; /* rosa claro */
+    padding: 20px;      /* mesmo padding do carrinho */
+    box-shadow: none;   /* sem sombra para combinar */
+    border-radius: 0;   /* sem bordas arredondadas */
+    overflow-y: auto;   /* rolagem vertical se precisar */
+    z-index: 10000;     /* acima do carrinho */
+    color: #000;
+    text-align: left;
+}
+
+
+
+#pix-qrcode h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+#pix-qrcode p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+#pix-qrcode img {
+    background-color: #cce7ff; /* azul bebê, igual ao .book */
+    padding: 15px;
+    border-radius: 10px;
+    width: 200px;       /* mesmo tamanho da .book */
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: block;
+    margin: 20px 20px 20px auto;/* centraliza e dá margem inferior */
+}
+
+#pix-qrcode button {
+    background-color: #ff66b2;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#pix-qrcode .back-btn {
+    background-color: #999;
+}
