@@ -6,16 +6,19 @@
     <title>Livraria Online</title>
     <link rel="stylesheet" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&family=Lora&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js" defer></script>
     <script src="script.js" defer></script>
+    <script src="jaTemUmaConta.js" defer></script>
+    <script src="login.js" defer></script>
 
 </head>
 <body>
+    
     <header>
         <h1>Livraria da Thaís</h1>
         <div class="search-bar">
-    <input type="text" id="search-input" placeholder="Buscar livro..." oninput="searchBook()" />
-</div>
-
+            <input type="text" id="search-input" placeholder="Buscar livro..." oninput="searchBook()" />
+        </div>
 
         <div class="cart-button-container">
             <button onclick="openCart()" class="cart-icon-btn">🛒</button>
@@ -24,73 +27,32 @@
         <div id="search-result"></div>
     </header>
 
-    <div id="cart" class="cart" style="display:none;">
-        <h2>LIVROS DO CARRINHO:</h2>
-        <div id="cart-items"></div>
-        <div id="cart-total">Total: R$ 0,00</div>
-        <button onclick="showCheckoutForm()" class="checkout-btn" id="checkout-button">Finalizar Compra</button>
-        <button class="back-btn" onclick="closeCart()">Voltar</button>
-    </div>
-
-    <div id="checkout-form" class="checkout-form" style="display: none;">
-        <h2>Finalizar Compra</h2>
-        <form onsubmit="completePurchase(event)">
-            <label for="name">Nome:</label>
-            <input type="text" id="name" required />
-            <label for="cpf">CPF:</label>
-            <input type="text" id="cpf" required />
-            <p>Forma de Pagamento: <strong>Pix</strong></p>
-            <button type="submit">Finalizar Compra</button>
-            <button type="button" class="back-btn" onclick="closeCheckoutForm()">Voltar</button>
-        </form>
-    </div>
-
-    <div id="pix-qrcode" class="checkout-form" style="display: none;">
-        <h2>Pagamento via Pix</h2>
-        <p>Escaneie o QR Code abaixo com seu app bancário:</p>
-        <img id="qrcode-img" src="img/qrcode-fake.png" alt="QR Code Pix" style="width: 200px; height: 200px;" />
-        <p id="pix-amount" style="font-weight: bold;"></p>
-        <button onclick="showPixConfirmation()">Simule Escaneamento</button>
-        <button class="back-btn" onclick="cancelPixPayment()">Cancelar</button>
-    </div><!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Livraria Online</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;700&family=Lora&display=swap" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js" defer></script>
-    <script src="script.js" defer></script>
-</head>
-<body>
-    
     <main>
         <section class="highlighted-books">
             <h2>Ofertas em Destaque</h2>
             <div class="book">
                 <img src="img/hipotese.jpeg" alt="A Hipótese do Amor" />
                 <h3>A Hipótese do Amor</h3>
-                <p>R$ 35,00</p>
-                <button onclick="addToCart('A Hipótese do Amor', 'R$ 35,00', 'img/hipotese.jpeg')">Adicionar ao Carrinho</button>
+                <span class="price">R$ 35,00</span>
+                <button onclick="addBookToCart(this)">Adicionar ao Carrinho</button>
             </div>
             <div class="book">
                 <img src="img/diarioDeUmaPaixao.jpeg" alt="Diário de Uma Paixão" />
                 <h3>Diário de uma Paixão</h3>
-                <p>R$ 30,00</p>
-                <button onclick="addToCart('Diário de uma Paixão', 'R$ 30,00', 'img/diarioDeUmaPaixao.jpeg')">Adicionar ao Carrinho</button>
+                <span class="price">R$ 30,00</span>
+                <button onclick="addBookToCart(this)">Adicionar ao Carrinho</button>
             </div>
             <div class="book">
                 <img src="img/oCapital.png" alt="O Capital" />
                 <h3>O Capital</h3>
-                <p>R$ 40,00</p>
-                <button onclick="addToCart('O Capital', 'R$ 40,00', 'img/oCapital.png')">Adicionar ao Carrinho</button>
+                <span class="price">R$ 40,00</span>
+                <button onclick="addBookToCart(this)">Adicionar ao Carrinho</button>
             </div>
             <div class="book">
                 <img src="img/noitesBrancas.jpeg" alt="Noites Brancas" />
                 <h3>Noites Brancas</h3>
-                <p>R$ 30,00</p>
-                <button onclick="addToCart('Noites Brancas', 'R$ 30,00', 'img/noitesBrancas.jpeg')">Adicionar ao Carrinho</button>
+                <span class="price">R$ 30,00</span>
+                <button onclick="addBookToCart(this)">Adicionar ao Carrinho</button>
             </div>
         </section>
 
@@ -99,26 +61,26 @@
             <div class="book">
                 <img src="img/verity.jpeg" alt="Verity" />
                 <h3>Verity</h3>
-                <p>R$ 40,00</p>
-                <button onclick="addToCart('Verity', 'R$ 40,00', 'img/verity.jpeg')">Adicionar ao Carrinho</button>
+                <span class="price">R$ 40,00</span>
+                <button onclick="addBookToCart(this)">Adicionar ao Carrinho</button>
             </div>
             <div class="book">
                 <img src="img/memoriasDoSubsolo.jpeg" alt="Memórias do Subsolo" />
                 <h3>Memórias do Subsolo</h3>
-                <p>R$ 45,00</p>
-                <button onclick="addToCart('Memórias do Subsolo', 'R$ 45,00', 'img/memoriasDoSubsolo.jpeg')">Adicionar ao Carrinho</button>
+                <span class="price">R$ 45,00</span>
+                <button onclick="addBookToCart(this)">Adicionar ao Carrinho</button>
             </div>
             <div class="book">
                 <img src="img/oAmorNaoeObvio.jpeg" alt="O Amor Não é Óbvio" />
                 <h3>O Amor Não é Óbvio</h3>
-                <p>R$ 45,00</p>
-                <button onclick="addToCart('O Amor Não é Óbvio', 'R$ 45,00', 'img/oAmorNaoeObvio.jpeg')">Adicionar ao Carrinho</button>
+                <span class="price">R$ 45,00</span>
+                <button onclick="addBookToCart(this)">Adicionar ao Carrinho</button>
             </div>
             <div class="book">
                 <img src="img/oPrincipeCruel.jpeg" alt="O Príncipe Cruel" />
                 <h3>O Príncipe Cruel</h3>
-                <p>R$ 60,00</p>
-                <button onclick="addToCart('O Príncipe Cruel', 'R$ 60,00', 'img/oPrincipeCruel.jpeg')">Adicionar ao Carrinho</button>
+                <span class="price">R$ 60,00</span>
+                <button onclick="addBookToCart(this)">Adicionar ao Carrinho</button>
             </div>
         </section>
 
@@ -127,26 +89,26 @@
             <div class="book">
                 <img src="img/estilhacame.jpeg" alt="Estilhaça-me" />
                 <h3>Estilhaça-me</h3>
-                <p>R$ 25,00</p>
-                <button onclick="addToCart('Estilhaça-me', 'R$ 25,00', 'img/estilhacame.jpeg')">Adicionar ao Carrinho</button>
+                <span class="price">R$ 25,00</span>
+                <button onclick="addBookToCart(this)">Adicionar ao Carrinho</button>
             </div>
             <div class="book">
                 <img src="img/amorTeoricamente.jpeg" alt="Amor, Teoricamente" />
                 <h3>Amor, Teoricamente</h3>
-                <p>R$ 20,00</p>
-                <button onclick="addToCart('Amor, Teoricamente', 'R$ 20,00', 'img/amorTeoricamente.jpeg')">Adicionar ao Carrinho</button>
+                <span class="price">R$ 20,00</span>
+                <button onclick="addBookToCart(this)">Adicionar ao Carrinho</button>
             </div>
             <div class="book">
                 <img src="img/rainhaVermelha.jpeg" alt="A Rainha Vermelha" />
                 <h3>A Rainha Vermelha</h3>
-                <p>R$ 30,00</p>
-                <button onclick="addToCart('A Rainha Vermelha', 'R$ 30,00', 'img/rainhaVermelha.jpeg')">Adicionar ao Carrinho</button>
+                <span class="price">R$ 30,00</span>
+                <button onclick="addBookToCart(this)">Adicionar ao Carrinho</button>
             </div>
             <div class="book">
                 <img src="img/1984.jpeg" alt="1984" />
                 <h3>1984</h3>
-                <p>R$ 35,00</p>
-                <button onclick="addToCart('1984', 'R$ 35,00', 'img/1984.jpeg')">Adicionar ao Carrinho</button>
+                <span class="price">R$ 35,00</span>
+                <button onclick="addBookToCart(this)">Adicionar ao Carrinho</button>
             </div>
         </section>
     </main>
@@ -173,12 +135,12 @@
     </div>
 
     <div id="pix-qrcode" class="checkout-form" style="display: none;">
-    <h2>Pagamento via Pix</h2>
-    <p>Escaneie o QR Code abaixo com seu app bancário:</p>
-    <img src="img/qrcodeCerto.jpeg" alt="QR Code Pix" />
-    <button onclick="showPixConfirmation()">Simule Escaneamento</button>
-    <button class="back-btn" onclick="cancelPixPayment()">Cancelar</button>
-</div>
+        <h2>Pagamento via Pix</h2>
+        <p>Escaneie o QR Code abaixo com seu app bancário:</p>
+        <img src="img/qrcodeCerto.jpeg" alt="QR Code Pix" />
+        <button onclick="showPixConfirmation()">Simule Escaneamento</button>
+        <button class="back-btn" onclick="cancelPixPayment()">Cancelar</button>
+    </div>
 
     <div id="pix-confirmation" class="checkout-form" style="display: none;">
         <h2>Confirmação de Pagamento</h2>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerente - Livraria</title>
+  <link rel="stylesheet" href="gerente.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lora&family=Poppins&family=Roboto&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <h1>Painel do Gerente</h1>
+
+  <!-- LIVROS -->
+  <section class="secao-livros">
+    <h2>Gerenciar Livros</h2>
+
+    <!-- Botão bonito para selecionar CSV -->
+    <button type="button" onclick="document.getElementById('livrosCSV').click()">Selecionar arquivo de livros (CSV)</button>
+    <input type="file" id="livrosCSV" accept=".csv" style="display: none;">
+
+    <form id="formLivros">
+      <input type="text" id="titulo" placeholder="Título" required>
+      <input type="number" id="preco" placeholder="Preço" required step="0.01">
+      <button type="submit">Salvar Livro</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Preço</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaLivros"></tbody>
+    </table>
+
+    <button onclick="baixarLivros()">Baixar CSV de Livros</button>
+  </section>
+
+  <hr>
+
+  <!-- CLIENTES -->
+  <section class="secao-clientes">
+    <h2>Ver Dados dos Clientes</h2>
+
+    <!-- Botão bonito para selecionar CSV -->
+    <button type="button" onclick="document.getElementById('usuariosCSV').click()">Selecionar arquivo de usuários (CSV)</button>
+    <input type="file" id="usuariosCSV" accept=".csv" style="display: none;">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaClientes"></tbody>
+    </table>
+  </section>
+
+  <script src="gerente.js"></script>
+
+</body>
+</html>

@@ -3,6 +3,26 @@ let cart = [];
 
 // Adiciona ao carrinho lendo os dados diretamente do HTML do livro
 function addBookToCart(button) {
+    const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+
+    if (!isLoggedIn) {
+        const bookElement = button.closest(".book");
+        const title = bookElement.querySelector("h3").textContent;
+        const priceStr = bookElement.querySelector(".price").textContent.trim();
+        const imgSrc = bookElement.querySelector("img").src;
+
+        // Salvar temporariamente no sessionStorage
+        sessionStorage.setItem("livroPendente", JSON.stringify({
+            title,
+            priceStr,
+            imgSrc
+        }));
+
+        alert("Faça login para adicionar o livro ao carrinho.");
+        window.location.href = "telaDeLogin/login.html";
+        return;
+    }
+
     const bookElement = button.closest(".book");
     const title = bookElement.querySelector("h3").textContent;
     const priceStr = bookElement.querySelector(".price").textContent.trim();
@@ -12,16 +32,15 @@ function addBookToCart(button) {
 }
 
 function addToCart(title, priceStr, imgSrc) {
-    // Preço em número para cálculos
     const price = parseFloat(priceStr.replace("R$ ", "").replace(",", "."));
-
-    // Verificar se o livro já está no carrinho
     const existingItem = cart.find(item => item.title === title);
+
     if (existingItem) {
         existingItem.quantity++;
     } else {
         cart.push({ title, price, imgSrc, quantity: 1 });
     }
+
     updateCartUI();
     openCart();
 }
@@ -29,7 +48,6 @@ function addToCart(title, priceStr, imgSrc) {
 function updateCartUI() {
     const cartItems = document.getElementById("cart-items");
     cartItems.innerHTML = "";
-
     let total = 0;
 
     cart.forEach((item, index) => {
@@ -37,7 +55,6 @@ function updateCartUI() {
 
         const itemDiv = document.createElement("div");
         itemDiv.className = "cart-item";
-
         itemDiv.innerHTML = `
             <img src="${item.imgSrc}" alt="${item.title}" style="width:50px; height:75px; object-fit:cover;" />
             <span>${item.title}</span> - 
@@ -52,7 +69,7 @@ function updateCartUI() {
     document.getElementById("cart-total").innerText = `Total: R$ ${total.toFixed(2).replace(".", ",")}`;
 
     if (cart.length === 0) {
-        document.getElementById("cart-items").innerHTML = "<p>Seu carrinho está vazio.</p>";
+        cartItems.innerHTML = "<p>Seu carrinho está vazio.</p>";
         document.getElementById("cart-total").innerText = "Total: R$ 0,00";
     }
 }
@@ -101,45 +118,29 @@ function closeCheckoutForm() {
 function completePurchase(event) {
     event.preventDefault();
 
-    document.getElementById("checkout-form").style.display = "none";
-    document.getElementById("pix-qrcode").style.display = "block";
+    const cpf = prompt("Confirme o seu CPF, por favor! 😉");
+    if (cpf && validarCPF(cpf)) {
+        document.getElementById("checkout-form").style.display = "none";
+        document.getElementById("pix-qrcode").style.display = "block";
 
-    const totalText = document.getElementById("cart-total").innerText; // Ex: "Total: R$ 120,00"
-    const totalValue = parseFloat(totalText.replace("Total: R$ ", "").replace(",", "."));
+        const totalText = document.getElementById("cart-total").innerText;
+        const totalValue = parseFloat(totalText.replace("Total: R$ ", "").replace(",", "."));
 
-    document.getElementById("pix-amount").innerText = totalText;
+        document.getElementById("pix-amount").innerText = totalText;
 
-    // Gerar código Pix no formato simples para QRCode
-    // Vamos usar um link Pix no formato: "pix://000201... valor"
-    // Como é simulação, vamos criar uma string que funcione em apps bancários para abrir a tela do Pix com valor preenchido
-    // Para isso, vamos gerar um "payload" simples (exemplo fixo que a maioria dos apps aceita):
+        const pixKey = "00000000-0000-0000-0000-000000000000";
+        const amountStr = totalValue.toFixed(2);
+        const pixUri = `pix:${pixKey}?amount=${amountStr}`;
 
-    const pixKey = "00000000-0000-0000-0000-000000000000"; // chave Pix fake (pode ser e-mail, CPF, celular etc)
-
-    // Montando URI Pix: "pix:<chave>?amount=<valor>"
-    // O valor precisa no formato 0.00 com ponto
-    const amountStr = totalValue.toFixed(2);
-
-    const pixUri = `pix:${pixKey}?amount=${amountStr}`;
-
-    // Gerar QR Code com essa URI e mostrar na img
-
-    generateQRCode(pixUri);
+        generateQRCode(pixUri);
+    } else {
+        alert("CPF inválido!");
+    }
 }
 
 function generateQRCode(data) {
-    // Usar biblioteca QRCode.js para gerar QRCode na img#qrcode-img
-
-    // Se ainda não tiver a lib, pode usar o CDN no HTML:
-    // <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-    // Aqui, vamos criar um canvas temporário e substituir a imagem:
-
     const qrContainer = document.getElementById("qrcode-img");
-    qrContainer.innerHTML = ""; // limpar imagem anterior se for container
-
-    // Como qrcode-img é <img>, vamos trocar por um div para gerar QRCode dentro
-    // Para evitar mexer no HTML, vamos substituir a imagem por um div no JS
+    qrContainer.innerHTML = "";
 
     const parent = qrContainer.parentNode;
     const newDiv = document.createElement("div");
@@ -147,8 +148,6 @@ function generateQRCode(data) {
     newDiv.style.width = "200px";
     newDiv.style.height = "200px";
     parent.replaceChild(newDiv, qrContainer);
-
-    // Agora gerar QR Code com a lib
 
     new QRCode(newDiv, {
         text: data,
@@ -187,21 +186,16 @@ function searchBook() {
     const books = document.querySelectorAll('main .book');
     const searchResult = document.getElementById('search-result');
 
-    // Limpa resultados anteriores
     searchResult.innerHTML = '';
 
     if (input === '') {
-        // Se campo vazio, não mostra nada em search-result
         searchResult.style.display = 'none';
         return;
     }
 
-    // Mostra o container do resultado
     searchResult.style.display = 'block';
 
-    // Percorre os livros e encontra os que batem com a pesquisa
     let foundBooks = [];
-
     books.forEach(book => {
         const title = removeAcento(book.querySelector('h3').textContent.toLowerCase());
         if (title.includes(input)) {
@@ -218,8 +212,7 @@ function searchBook() {
     }
 }
 
-// Função para validar CPF
-function validarCPF(cpf) { 
+function validarCPF(cpf) {
     cpf = cpf.replace(/[^\d]+/g, '');
     if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
 
@@ -242,29 +235,12 @@ function validarCPF(cpf) {
     return true;
 }
 
-// Função para completar compra com validação de CPF
-function completePurchase(event) {
-    event.preventDefault();
-
-    const cpf = prompt("Confirme o seu CPF, por favor! 😉");
-    
-    if (cpf && validarCPF(cpf)) {
-        // CPF válido, segue o processo de checkout
-        document.getElementById("checkout-form").style.display = "none";
-        document.getElementById("pix-qrcode").style.display = "block";
-
-        const totalText = document.getElementById("cart-total").innerText;
-        const totalValue = parseFloat(totalText.replace("Total: R$ ", "").replace(",", "."));
-
-        document.getElementById("pix-amount").innerText = totalText;
-
-        const pixKey = "00000000-0000-0000-0000-000000000000";
-        const amountStr = totalValue.toFixed(2);
-        const pixUri = `pix:${pixKey}?amount=${amountStr}`;
-
-        generateQRCode(pixUri);
-    } else {
-        alert("CPF inválido!");
+// 🔁 ADICIONA O LIVRO AO CARRINHO AUTOMATICAMENTE APÓS LOGIN
+window.addEventListener("load", () => {
+    const livroPendente = sessionStorage.getItem("livroPendente");
+    if (livroPendente) {
+        const { title, priceStr, imgSrc } = JSON.parse(livroPendente);
+        addToCart(title, priceStr, imgSrc);
+        sessionStorage.removeItem("livroPendente");
     }
-}
-
+});
